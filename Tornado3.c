@@ -16,25 +16,15 @@ GLfloat Diffuse[] = {0.6f, 0.6f, 0.6f, 1.0f};
 GLfloat Specular[] = {1.0f, 1.0f, 1.0f, 1.0f};
 
 float Angle = 0.0f;
-float kk = 10.0f;
-double zz = -1.2;
-
-void Reload_Matrix() {
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    glFrustum(-1.0, 1.0, zz, zz + 2.0, 1, 50);
-    glTranslatef(0.0f, -1.5f, -7.0f);
-    glRotatef(kk, 1, 0, 0);
-    glViewport(0, 0, WIDTH, HEIGHT);
-    glMatrixMode(GL_MODELVIEW);
-}
+float Rotate = 10.0f;
+double Height = -1.2;
 
 void Init_Game() {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glFrustum(-1.0, 1.0, -1.2, 0.8, 1, 50);
-    glTranslatef(0.0f, -1.5f, -7.0f);
-    glRotatef(10, 1, 0, 0);
+    glFrustum(-1.0, 1.0, Height, Height + 2.0, 1, 50);
+    glTranslatef(0.0f, -5.0f, -7.0f);
+    glRotatef(Rotate, 1.0f, 0.0f, 0.0f);
     glViewport(0, 0, WIDTH, HEIGHT);
     glMatrixMode(GL_MODELVIEW);
     glClearColor(BG_Color[0], BG_Color[1], BG_Color[2], BG_Color[3]);
@@ -49,47 +39,36 @@ void Init_Game() {
     glEnable(GL_LIGHTING);
 }
 
-float r2 = 4.0f, h2 = 0.0f, a2 = 0.0f;
+float r2 = 5.6f, h2 = 0.0f, a2 = 0.0f; //0.6f
+float a4 = 10.0f;
 
 void Display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     int i, j, k;
-    //    float f=3.0f,g,h;
-    //    for (i=0;i<30;i++){
-    //    	g=3.0f-i*0.3f;
-    //    	k=60-i*1.2f;
-    //    	h=360.0f/k;
-    //    	for (j=0;j<k;j++){
-    //    		glLoadIdentity();
-    //    		glRotatef(j*h-Angle,0.0f,1.0f,0.0f);
-    //    		glTranslatef(f,g,0.0f);
-    //    		glutSolidSphere(0.05,10,10);
-    //		}
-    //		f*=0.93f;
-    //	}
     float a = a2, h = h2, r = r2;
-    for (i = 0; i < 500; i++) {
+    float a3 = a4;
+    float h3 = 0.006f;
+    for (i = 0; i < 1000; i++) {
         glLoadIdentity();
         glRotatef(a - Angle, 0.0f, 1.0f, 0.0f);
         glTranslatef(r, h, 0.0f);
         glutSolidSphere(0.05, 10, 10);
-        a += 5.0f;
-        h += 0.01f;
-        r *= 1.002f;
+        a += a3;
+        h += h3;
+        r *= 1.0017f;
+        a3 *= 0.9994f;
+        h3 /= 1.0005f;
     }
     glLoadIdentity();
     glutSwapBuffers();
 }
 
 void Timer(int value) {
-    r2 /= 1.002f;
-    //	h2-=0.01;
-    //	a2-=5.0f;
-    Angle -= 1.0f;
-    //	kk-=0.05;
-    //	zz*=1.001f;
-    Reload_Matrix();
+    r2 /= 1.0017f;
+    h2 *= 1.0005f;
+    a4 *= 1.0002f;
+    Angle += 1.2f;
     glutPostRedisplay();
     glutTimerFunc(INTERVAL, Timer, 0);
 }
