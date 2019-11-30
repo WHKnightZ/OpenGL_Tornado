@@ -41,17 +41,17 @@ void Display() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity();
     int i, j, k;
-    float r = 3.0f, h, Offset_Angle;
+    float r = 3.0f, h = 3.0f, Offset_Angle;
     for (i = 0; i < 30; i++) {
         k = 60 - i * 1.2f;
         Offset_Angle = 360.0f / k;
-        h = 3.0f - i * 0.3f;
         for (j = 0; j < k; j++) {
             glLoadIdentity();
             glRotatef(j * Offset_Angle - Angle, 0.0f, 1.0f, 0.0f);
             glTranslatef(r, h, 0.0f);
             glutSolidSphere(0.05, 10, 10);
         }
+        h -= 0.3f;
         r *= 0.93f;
     }
     glLoadIdentity();

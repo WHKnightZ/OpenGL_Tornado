@@ -39,7 +39,7 @@ void Init_Game() {
     glEnable(GL_LIGHTING);
 }
 
-float r2 = 5.6f, h2 = 0.0f, a2 = 0.0f; //0.6f
+float r2 = 0.6f, h2 = 0.0f, a2 = 0.0f; //0.6f
 float a4 = 10.0f;
 
 void Display() {
@@ -48,7 +48,7 @@ void Display() {
     int i, j, k;
     float a = a2, h = h2, r = r2;
     float a3 = a4;
-    float h3 = 0.006f;
+    float h3 = 0.004f;
     for (i = 0; i < 1000; i++) {
         glLoadIdentity();
         glRotatef(a - Angle, 0.0f, 1.0f, 0.0f);
@@ -57,17 +57,17 @@ void Display() {
         a += a3;
         h += h3;
         r *= 1.0017f;
-        a3 *= 0.9994f;
-        h3 /= 1.0005f;
+        a3 *= 0.9999994f;
+        h3 /= 1.001f;
     }
     glLoadIdentity();
     glutSwapBuffers();
 }
 
 void Timer(int value) {
-    r2 /= 1.0017f;
-    h2 *= 1.0005f;
-    a4 *= 1.0002f;
+//    r2 /= 1.0017f;
+//    h2 *= 1.0005f;
+//    a4 *= 1.0002f;
     Angle += 1.2f;
     glutPostRedisplay();
     glutTimerFunc(INTERVAL, Timer, 0);
